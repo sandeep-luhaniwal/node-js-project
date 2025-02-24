@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="bg-zinc-900 text-white w-full min-h-screen">
+        <div class="max-w-[600px] px-4 mx-auto py-10">
+            <div class="flex  justify-end">
+                <a class="mb-2 bg-red-500 inline-block px-5 py-2" href="/logout">logout</a>
+
+            </div>
+            <h3 class="text-white pb-5 text-3xl">Hello, <%=user.name %>
+            </h3>
+            <h5 class="text-2xl pb-6">You can create a new post</h5>
+            <form class="flex flex-col gap-5" action="/post" method="post">
+                <textarea class="w-full resize-none border border-white p-3" placeholder="what your post"
+                    name="content"></textarea>
+                <input type="submit" class="px-3 py-2 mt-5 bg-blue-600">
+            </form>
+            <div class="posts mt-10">
+                <h3 class="text-lg text-zinc-400">your post</h3>
+                <div class="postcontainer mt-5 flex flex-wrap">
+                    <div class="w-1/2 p-4 border-[1px] mb-3 border-zinc-500">
+                        <% user.posts.reverse().forEach(function(post) { %>
+                            <h2 class="text-2xl text-white">@<%= user.username %>
+                            </h2>
+                            <p>
+                                <%= post.content %>
+                            </p>
+                            <div class="flex gap-5 pt-3">
+                                <div class="flex gap-1">
+                                    <a class="text-blue-600" href="/like/<%= post._id %>">
+                                        <%= post.likes.indexOf(user.id)===-1 ?"like":"unlike" %>
+                                    </a>
+                                    <span>
+                                        <%= post.likes.length %>
+                                    </span>
+                                </div>
+                                <a class="text-red-600" href="/edit/<%= post._id %>">Edit</a>
+                            </div>
+                            <% }) %>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
